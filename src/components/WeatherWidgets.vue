@@ -6,6 +6,7 @@
 <script>
 import MainWindowWeatherWidgets from './WeatherWidgetsComponents/MainWindow.vue'
 import Settings from './WeatherWidgetsComponents/SettingsWindow.vue'
+import getWeather from '../API/getWeather.js'
 
 export default {
   name: 'WeatherWidgets',
@@ -13,13 +14,18 @@ export default {
     MainWindowWeatherWidgets,
     Settings
   },
+  data(){
+    return {
+      citiesArray: []
+    }
+  },
   async mounted() {
-    const cities = ['London', 'Moscow']
-    // Основной код
-    const citiesCord = await Promise.all(cities.map(getCityCoordinates));
-    const citiesWeather = await Promise.all(citiesCord.map(getCityWeather));
-
-      }
+    let cities = ['Moscow','London']
+    cities.forEach(async element => {
+      let res = await getWeather.getCityData(element)
+      this.citiesArray.push(res)
+    });
+    }
 }
 </script>
 <style scoped lang="scss">
