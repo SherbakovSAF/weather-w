@@ -33,6 +33,7 @@
     </div>
     <div class="info__block">Visibility {{city.visibility/1000}}km</div>
   </div>
+  <hr>
 </template>
 
 <script>
@@ -52,10 +53,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .main__wrap {
-  font-size: 15px;
-  width: 270px;
-  font-weight: 500;
-
+  margin-bottom: 30px;
   img {
     width: 2em;
     height: 2em;

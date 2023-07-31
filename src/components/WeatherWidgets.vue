@@ -1,27 +1,32 @@
 <template>
-  <div v-show="cit.length">
-    <main-window-weather-widgets v-for="city in cit" :key="city.city" :city="city"/>
+  <div class="widgets__wrap">
+    <Preloader v-show="isPreloader"/>
+    <div v-show="addedСities.length">
+      <main-window-weather-widgets v-for="city in addedСities" :key="city.city" :city="city"/>
+      <settings/>
+    </div>
   </div>
-  
-  <settings/>
-
 </template>
 
 <script>
 import MainWindowWeatherWidgets from './WeatherWidgetsComponents/MainWindow.vue'
 import Settings from './WeatherWidgetsComponents/SettingsWindow.vue'
+import Preloader from './PreloaderComponents.vue'
+
 import getWeather from '@/API/getWeather.js'
 
 export default {
   name: 'WeatherWidgets',
   components: {
     MainWindowWeatherWidgets,
-    Settings
+    Settings,
+    Preloader
   },
   data(){
     return{
       citiesData: ['Manchester', 'Budapest', 'Guangzhou'],
-      cit: []
+      addedСities: [],
+      isPreloader: false,
     }
   },
   methods: {
@@ -36,17 +41,23 @@ export default {
         }
       }
 
-      this.cit = updatedCitiesData;
+      this.addedСities = updatedCitiesData;
     },
     rotateDirection(deg){
       return `rotate: ${deg}deg`
     },
   },
-  mounted() {
-    this.updateCitiesData()
+  async mounted() {
+    this.isPreloader = true
+    await this.updateCitiesData()
+    this.isPreloader = false
   }
 }
 </script>
 <style scoped lang="scss">
-
+.widgets__wrap{
+  font-size: 15px;
+  width: 270px;
+  font-weight: 500;
+}
 </style>
