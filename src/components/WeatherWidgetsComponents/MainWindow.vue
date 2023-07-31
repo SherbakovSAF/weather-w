@@ -1,37 +1,37 @@
 <template>
   <div class="main__wrap">
     <div class="info__panel">
-      <h1 class="main__window__city">London, UK</h1>
+      <h1 class="main__window__city">{{city.city}}, {{city.country}}</h1>
       <button>
         <img src="@/assets/icons/settings.svg" alt="Settings">
       </button>
     </div>
     <div id="icon__weather">
-      <icon-weather />
-      <h2><span>7</span>°C</h2>
+      <icon-weather :weather="city.weather.main.toLowerCase()"/>
+      <h2>{{ city.weather.temp.toFixed() }}°C</h2>
     </div>
-    <div class="info__block">Feels like <span>-3C</span>. <span>Broken clouds. Light breeze</span></div> 
+    <div class="info__block">Feels like {{city.weather.feelsLike.toFixed()}}°C. {{city.weather.description.charAt(0).toUpperCase() + city.weather.description.slice(1)}}.</div> 
     <div class="info__block wind__block">
       <div class="wind__item">
         <div>
           <img id="direction" src="@/assets/icons/direction.svg" alt="Direction">
         </div>
-        <div><span>3m/s</span>SSE</div>
+        <div>{{city.wind.speed}} {{city.wind.directionWind}}</div>
       </div>
       <div class="wind__item">
         <img src="@/assets/icons/compass.svg" alt="Compass">
-        <div>1021hPA</div>
+        <div>{{city.hPa}}hPA</div>
       </div>
     </div>
     <div class="info__block wind__block">
       <div>
-        Humidity: <span>97%</span>
+        Humidity: {{city.humidity}}%
       </div>
       <div>
-        Dew point: <span>0C</span>
+        Dew point: {{city.dewPoint}}°C
       </div>
     </div>
-    <div class="info__block">Visibility 10km</div>
+    <div class="info__block">Visibility {{city.visibility/1000}}km</div>
   </div>
 </template>
 
@@ -41,7 +41,13 @@ export default {
   name: 'MainWindowWeatherWidgets',
   components: {
     IconWeather,
-  }
+  },
+  props: {
+    city: {
+      type: Object,
+      required: false
+    },
+  },
 }
 </script>
 <style scoped lang="scss">

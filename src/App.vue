@@ -1,9 +1,9 @@
 <template>
-  <weather-widgets/>
+  <WeatherWidgets/>
 </template>
 
 <script>
-import WeatherWidgets from './components/WeatherWidgets.vue'
+import WeatherWidgets from '@/components/WeatherWidgets.vue'
 
 export default {
   name: 'App',
