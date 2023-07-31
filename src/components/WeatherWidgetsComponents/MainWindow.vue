@@ -3,23 +3,23 @@
     <div class="info__panel">
       <h1 class="main__window__city">London, UK</h1>
       <button>
-        <img src="../../assets/icons/settings.svg" alt="Settings">
+        <img src="@/assets/icons/settings.svg" alt="Settings">
       </button>
     </div>
     <div id="icon__weather">
-      Инконка
+      <icon-weather />
       <h2><span>7</span>°C</h2>
     </div>
     <div class="info__block">Feels like <span>-3C</span>. <span>Broken clouds. Light breeze</span></div> 
     <div class="info__block wind__block">
       <div class="wind__item">
         <div>
-          <img id="direction" src="../../assets/icons/direction.svg" alt="Direction">
+          <img id="direction" src="@/assets/icons/direction.svg" alt="Direction">
         </div>
         <div><span>3m/s</span>SSE</div>
       </div>
       <div class="wind__item">
-        <img src="../../assets/icons/compass.svg" alt="Compass">
+        <img src="@/assets/icons/compass.svg" alt="Compass">
         <div>1021hPA</div>
       </div>
     </div>
@@ -36,8 +36,12 @@
 </template>
 
 <script>
+import IconWeather from './MainWindow/IconWeather.vue'
 export default {
   name: 'MainWindowWeatherWidgets',
+  components: {
+    IconWeather,
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -69,7 +73,6 @@ export default {
   }
 
   #icon__weather {
-    padding: 20px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,7 +80,6 @@ export default {
       font-size: 45px;
       font-weight: 500;
       margin: 0;
-      margin-left: 20px;
     }
   }
 
