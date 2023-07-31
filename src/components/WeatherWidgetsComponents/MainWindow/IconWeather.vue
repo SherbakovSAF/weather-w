@@ -17,19 +17,25 @@ export default {
      data(){
           return{
                iconPath: {
-                    sun: require('@/assets/weatherIcons/sun.svg')
+                    clear: require('@/assets/weatherIcons/clear.svg'),
+                    clouds: require('@/assets/weatherIcons/clouds.svg'),
+                    rain: require('@/assets/weatherIcons/rain.svg'),
+                    snow: require('@/assets/weatherIcons/snow.svg'),
+
                }
           }
      },
      computed: {
           renderIconWeather(){
-               switch (this.weather) {
-                    case 'sun':
-                         return this.iconPath.sun
-                    default:
-                    return this.iconPath.sun
+               if(this.weather){
+                    return this.iconPath[this.weather]
+               } else {
+                    return this.iconPath.clear
                }
           }
+     },
+     mounted(){
+          console.log(this.weather)
      }
 }
 </script>
