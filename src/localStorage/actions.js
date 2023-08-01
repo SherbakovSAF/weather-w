@@ -1,4 +1,4 @@
-const actionLocalStorage = {
+const actionsLocalStorage = {
      nameLocalStorage: 'cities',
      getCitiesArray(){
           return JSON.parse(localStorage.getItem(this.nameLocalStorage))
@@ -18,4 +18,4 @@ const actionLocalStorage = {
      },
 }
 
-export default actionLocalStorage
+export default actionsLocalStorage

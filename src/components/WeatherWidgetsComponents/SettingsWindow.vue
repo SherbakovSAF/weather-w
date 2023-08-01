@@ -22,16 +22,21 @@
     <div class="new__location__wrap">
       <h2>Add Location:</h2>
       <div class="input__block">
-        <input v-model="newCity" type="text">
+        <input 
+          :class="{'input__valid': !isValid}"
+          @keydown.enter="addNewCityLocalStorage" 
+          v-model.trim="newCity" 
+          type="text">
         <button @click="addNewCityLocalStorage"><img src="@/assets/icons/enter.svg" alt="Ввод"></button>
       </div>
+      <span v-show="!isValid">Введите корректное значение</span>
     </div>
   </div>
 </template>
 
 <script>
 import IconHamburg from '@/components/WeatherWidgetsComponents/SettingsWindow/IconHamburg'
-import actionLocalStorage from '@/localStorage/localStorageObject.js'
+import actionsLocalStorage from '@/localStorage/actions.js'
 
 export default {
   name: 'MainWindowWeatherWidgets',
@@ -40,12 +45,18 @@ export default {
   },
   data(){
     return {
-      newCity: ''
+      newCity: '',
+    }
+  },
+  computed: {
+    isValid() {
+      return this.newCity.length < 1 || this.newCity.length > 5
     }
   },
   methods: {
     addNewCityLocalStorage(){
-      actionLocalStorage.setNewCity(this.newCity)
+      actionsLocalStorage.setNewCity(this.newCity)
+      this.newCity = ''
     }
   }
 }
@@ -127,6 +138,11 @@ export default {
       &:hover {
         border-color: rgb(101, 176, 219);
       }
+    }
+
+    .input__valid, .input__valid:hover{
+      border: 1px solid rgb(143, 60, 60);
+    
     }
 
     button {

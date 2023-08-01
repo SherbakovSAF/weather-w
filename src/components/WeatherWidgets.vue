@@ -38,7 +38,7 @@ export default {
       citiesData: ['Hamburg', 'Budapest', 'Guangzhou', 'Cherkasy'],
       addedСities: [],
       isPreloader: false,
-      isSettings: false,
+      isSettings: true,
     }
   },
   methods: {
