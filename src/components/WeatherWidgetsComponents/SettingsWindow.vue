@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1>London, UK</h1>
+      <h1>Settings</h1>
       <button>Close</button>
     </div>
     <div>

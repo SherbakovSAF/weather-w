@@ -1,11 +1,6 @@
 <template>
   <div class="main__wrap">
-    <div class="info__panel">
-      <h1 class="main__window__city">{{city.city}}, {{city.country}}</h1>
-      <button>
-        <img src="@/assets/icons/settings.svg" alt="Settings">
-      </button>
-    </div>
+    <h1 class="main__window__city">{{city.city}}, {{city.country}}</h1>
     <div id="icon__weather">
       <icon-weather :weather="city.weather.main.toLowerCase()"/>
       <h2>{{ city.weather.temp.toFixed() }}°C</h2>
@@ -14,7 +9,7 @@
     <div class="info__block wind__block">
       <div class="wind__item">
         <div>
-          <img id="direction" src="@/assets/icons/direction.svg" alt="Direction">
+          <img id="direction" :style="calcRotateDirection(city.wind.deg)" src="@/assets/icons/direction.svg" alt="Direction">
         </div>
         <div>{{city.wind.speed}} {{city.wind.directionWind}}</div>
       </div>
@@ -49,6 +44,11 @@ export default {
       required: false
     },
   },
+  methods: {
+    calcRotateDirection(deg){
+      return `rotate: ${deg}deg`
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -58,23 +58,10 @@ export default {
     width: 2em;
     height: 2em;
   }
-
-  .info__panel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h1 {
+    .main__window__city {
       font-size: inherit;
       font-weight: 600;
     }
-
-    button {
-      background-color: transparent;
-      border: none;
-
-    }
-  }
 
   #icon__weather {
     display: flex;
