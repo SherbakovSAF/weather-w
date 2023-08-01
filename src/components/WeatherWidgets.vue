@@ -1,9 +1,10 @@
 <template>
   <div class="widgets__wrap">
     <Preloader v-show="isPreloader"/>
-    
+
     <div v-show="addedСities.length">
       <SettingsButton 
+        
         :isSettings="isSettings"
         @click="isSettings = !isSettings"/>
       <div v-if="!isSettings">
@@ -12,7 +13,8 @@
           :key="city.city"
           :city="city"/>
       </div>
-      <settings v-else/>
+      <settings v-else :citiesList="addedСities" 
+      @updateCities="updateCitiesData"/>
     </div>
   </div>
 </template>
@@ -24,7 +26,7 @@ import Preloader from './PreloaderComponents.vue'
 import SettingsButton from './WeatherWidgetsComponents/SettingsButton.vue'
 
 import getWeather from '@/API/getWeather.js'
-
+import actionsLocalStorage from '@/localStorage/actions.js'
 export default {
   name: 'WeatherWidgets',
   components: {
@@ -35,16 +37,16 @@ export default {
   },
   data(){
     return{
-      citiesData: ['Hamburg', 'Budapest', 'Guangzhou', 'Cherkasy'],
       addedСities: [],
       isPreloader: false,
-      isSettings: true,
+      isSettings: false,
     }
   },
   methods: {
   async updateCitiesData() {
+    const localStorageCities = await actionsLocalStorage.getCitiesArray()
       const updatedCitiesData = [];
-      for (const city of this.citiesData) {
+      for (const city of localStorageCities) {
         try {
           const weather = await getWeather.getCityData(city);
           updatedCitiesData.push(weather);

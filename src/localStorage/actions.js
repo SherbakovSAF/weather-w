@@ -1,17 +1,14 @@
 const actionsLocalStorage = {
      nameLocalStorage: 'cities',
      getCitiesArray(){
-          return JSON.parse(localStorage.getItem(this.nameLocalStorage))
-     },
-     checkLocalStorage(){
           if(localStorage.length <= 0) {
                return []
           } else {
-               return this.getCitiesArray()
+               return JSON.parse(localStorage.getItem(this.nameLocalStorage))
           }
      },
      setNewCity(newCity){
-          const lsItems = this.checkLocalStorage()
+          const lsItems = this.getCitiesArray()
           lsItems.push(newCity)
           const JSONlsItems = JSON.stringify(lsItems)
           localStorage.setItem(this.nameLocalStorage, JSONlsItems)

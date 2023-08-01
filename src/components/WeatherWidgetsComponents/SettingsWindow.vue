@@ -4,17 +4,10 @@
       <h1>Settings</h1>
     </div>
     <div class="cities__wrap">
-      <article>
+      <article v-for="city in citiesList" :key="city">
         <div class="content__wrap">
           <icon-hamburg />
-          <h1>London</h1>
-          <button><img src="@/assets/icons/garb.svg" alt="Корзина"></button>
-        </div>
-      </article>
-      <article>
-        <div class="content__wrap">
-          <icon-hamburg />
-          <h1>London</h1>
+          <h1>{{city.city}}</h1>
           <button><img src="@/assets/icons/garb.svg" alt="Корзина"></button>
         </div>
       </article>
@@ -39,10 +32,15 @@ import IconHamburg from '@/components/WeatherWidgetsComponents/SettingsWindow/Ic
 import actionsLocalStorage from '@/localStorage/actions.js'
 
 export default {
-  name: 'MainWindowWeatherWidgets',
+  name: 'SettingsWindow',
+  props: {
+    citiesList: {type: Array, required: true}
+  },
+  emits: ['updateCities'],
   components: {
     IconHamburg
   },
+
   data(){
     return {
       newCity: '',
@@ -56,7 +54,8 @@ export default {
   methods: {
     addNewCityLocalStorage(){
       actionsLocalStorage.setNewCity(this.newCity)
-      this.newCity = ''
+      this.newCity = '',
+      this.$emit('updateCities')
     }
   }
 }
