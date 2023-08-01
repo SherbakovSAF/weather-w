@@ -4,15 +4,23 @@
       <h1>Settings</h1>
     </div>
     <preloader v-if="isPreloader" />
-    <div v-else class="cities__wrap">
-      <article v-for="city in citiesList" :key="city">
+    <draggable v-else class="cities__wrap"
+      handle=".handle"
+      @start="dragging = true"
+      @end="dragging = false"
+      :list="citiesList"
+      :item-key="'hPa'"
+      >
+      <template #item="{element: citiesList}">
+        <article :key="citiesList.humidity">
         <div class="content__wrap">
-          <icon-hamburg />
-          <h1>{{city.city}}</h1>
-          <button @click="deleteCityLocalStorage(city.city)"><img src="@/assets/icons/garb.svg" alt="Корзина"></button>
+          <icon-hamburg class="handle"/>
+          <h1>{{ citiesList.city }}</h1>
+          <button @click="deleteCityLocalStorage(citiesList.city)"><img src="@/assets/icons/garb.svg" alt="Корзина"></button>
         </div>
       </article>
-    </div>
+      </template>
+    </draggable>
     <div class="new__location__wrap">
       <h2>Add Location:</h2>
       <div class="input__block">
@@ -32,6 +40,8 @@
 import IconHamburg from '@/components/WeatherWidgetsComponents/SettingsWindow/IconHamburg'
 import actionsLocalStorage from '@/localStorage/actions.js'
 import preloader from '@/components/Preloader.vue'
+import draggable from 'vuedraggable'
+
 export default {
   name: 'SettingsWindow',
   props: {
@@ -41,19 +51,20 @@ export default {
   emits: ['updateCities'],
   components: {
     IconHamburg,
-    preloader
+    preloader,
+    draggable
   },
 
   data(){
     return {
       newCity: '',
-      
+      dragging: false
     }
   },
   computed: {
     isValid() {
       return this.newCity.length < 1 || this.newCity.length > 5
-    }
+    },
   },
   methods: {
     addNewCityLocalStorage(){
@@ -67,7 +78,7 @@ export default {
     deleteCityLocalStorage(cityName){
       actionsLocalStorage.deleteCity(cityName)
       this.$emit('updateCities')
-    }
+    },
   }
 }
 </script>
