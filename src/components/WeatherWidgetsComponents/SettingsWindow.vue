@@ -22,8 +22,8 @@
     <div class="new__location__wrap">
       <h2>Add Location:</h2>
       <div class="input__block">
-        <input type="text">
-        <button><img src="@/assets/icons/enter.svg" alt="Ввод"></button>
+        <input v-model="newCity" type="text">
+        <button @click="addNewCityLocalStorage"><img src="@/assets/icons/enter.svg" alt="Ввод"></button>
       </div>
     </div>
   </div>
@@ -31,16 +31,27 @@
 
 <script>
 import IconHamburg from '@/components/WeatherWidgetsComponents/SettingsWindow/IconHamburg'
+import actionLocalStorage from '@/localStorage/localStorageObject.js'
+
 export default {
   name: 'MainWindowWeatherWidgets',
   components: {
     IconHamburg
+  },
+  data(){
+    return {
+      newCity: ''
+    }
+  },
+  methods: {
+    addNewCityLocalStorage(){
+      actionLocalStorage.setNewCity(this.newCity)
+    }
   }
 }
 </script>
 <style scoped lang="scss">
 .main__wrap {
-
   * {
     font-size: 16px;
   }
@@ -68,6 +79,7 @@ export default {
 .cities__wrap {
   display: grid;
   grid-row-gap: 15px;
+
   article {
     background-color: rgb(233, 233, 233);
 
@@ -86,41 +98,41 @@ export default {
         height: 1.5em;
       }
     }
-  }  
+  }
 }
 
 .new__location__wrap {
-    margin-top: 30px;
+  margin-top: 30px;
 
-    h2 {
-      font-weight: 600;
-      margin: 0;
-      margin-bottom: 0.5em, ;
+  h2 {
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 0.5em, ;
+  }
+
+  .input__block {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    input {
+      width: 100%;
+      padding: 0.5em;
+      border: 1px solid black;
+      outline: none;
+      font-size: 15px;
+      border-radius: 2px;
+
+      &:hover {
+        border-color: rgb(101, 176, 219);
+      }
     }
 
-    .input__block {
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      input {
-        width: 100%;
-        padding: 0.5em;
-        border: 1px solid black;
-        outline: none;
-        font-size: 15px;
-        border-radius: 2px;
-
-        &:hover {
-          border-color: rgb(101, 176, 219);
-        }
-      }
-
-      button {
-        margin-left: 10px;
-        height: 2em;
-      }
+    button {
+      margin-left: 10px;
+      height: 2em;
     }
   }
+}
 </style>
