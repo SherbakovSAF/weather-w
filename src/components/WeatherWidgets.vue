@@ -1,9 +1,9 @@
 <template>
   <div class="widgets__wrap">
-    <Preloader v-show="isPreloader"/>
+    <Preloader v-show="isPreloader && !isSettings"/>
 
     <div v-show="addedСities.length">
-      <SettingsButton 
+      <SettingsButton
         
         :isSettings="isSettings"
         @click="isSettings = !isSettings"/>
@@ -13,7 +13,9 @@
           :key="city.city"
           :city="city"/>
       </div>
-      <settings v-else :citiesList="addedСities" 
+      <settings v-else 
+      :citiesList="addedСities"
+      :isPreloader="isPreloader" 
       @updateCities="updateCitiesData"/>
     </div>
   </div>
@@ -44,6 +46,7 @@ export default {
   },
   methods: {
   async updateCitiesData() {
+    this.isPreloader = true
     const localStorageCities = await actionsLocalStorage.getCitiesArray()
       const updatedCitiesData = [];
       for (const city of localStorageCities) {
@@ -56,15 +59,14 @@ export default {
       }
 
       this.addedСities = updatedCitiesData;
+      this.isPreloader = false
     },
     rotateDirection(deg){
       return `rotate: ${deg}deg`
     },
   },
   async mounted() {
-    this.isPreloader = true
     await this.updateCitiesData()
-    this.isPreloader = false
   }
 }
 </script>

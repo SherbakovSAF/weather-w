@@ -3,7 +3,8 @@
     <div class="title__block">
       <h1>Settings</h1>
     </div>
-    <div class="cities__wrap">
+    <preloader v-if="isPreloader" />
+    <div v-else class="cities__wrap">
       <article v-for="city in citiesList" :key="city">
         <div class="content__wrap">
           <icon-hamburg />
@@ -30,20 +31,23 @@
 <script>
 import IconHamburg from '@/components/WeatherWidgetsComponents/SettingsWindow/IconHamburg'
 import actionsLocalStorage from '@/localStorage/actions.js'
-
+import preloader from '@/components/Preloader.vue'
 export default {
   name: 'SettingsWindow',
   props: {
-    citiesList: {type: Array, required: true}
+    citiesList: {type: Array, required: true},
+    isPreloader: {type: Boolean, required: true},
   },
   emits: ['updateCities'],
   components: {
-    IconHamburg
+    IconHamburg,
+    preloader
   },
 
   data(){
     return {
       newCity: '',
+      
     }
   },
   computed: {
@@ -53,8 +57,11 @@ export default {
   },
   methods: {
     addNewCityLocalStorage(){
+      if(!this.isValid){
+        return
+      }
       actionsLocalStorage.setNewCity(this.newCity)
-      this.newCity = '',
+      this.newCity = ''
       this.$emit('updateCities')
     },
     deleteCityLocalStorage(cityName){
