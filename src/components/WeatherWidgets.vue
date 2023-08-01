@@ -1,6 +1,7 @@
 <template>
   <div class="widgets__wrap">
     <Preloader v-show="isPreloader"/>
+    
     <div v-show="addedСities.length">
       <SettingsButton 
         :isSettings="isSettings"

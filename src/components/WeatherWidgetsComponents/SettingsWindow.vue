@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title__wrap">
+    <div class="title__block">
       <h1>Settings</h1>
     </div>
     <div>
@@ -26,11 +26,10 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.title__wrap{
-  h1{ 
+.title__block{
+  h1{
     font-size: 15px;
     font-weight: 600;
   }
-  
 }
 </style>

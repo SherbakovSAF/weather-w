@@ -1,8 +1,7 @@
 <template>
      <button>
-          <img id="gear" v-if="!isSettings" src="@/assets/icons/settings.svg" alt="Settings">
-          <img id="close" v-else src="@/assets/icons/close.svg" alt="Settings">
-
+          <img v-if="!isSettings" src="@/assets/icons/settings.svg" alt="Settings">
+          <img id="close" v-else src="@/assets/icons/close.svg" alt="Close">
      </button>
 </template>
 
@@ -15,7 +14,6 @@ export default {
                required: true
           }
      }
-     
 }
 </script>
 
@@ -36,8 +34,7 @@ button {
                height: inherit;
                width: inherit;
           }
-
-     #close {
+     #close{
           width: 1.5em;
           height: 1.5em;
      }
