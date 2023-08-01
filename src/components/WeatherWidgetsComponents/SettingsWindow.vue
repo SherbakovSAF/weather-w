@@ -8,7 +8,7 @@
         <div class="content__wrap">
           <icon-hamburg />
           <h1>{{city.city}}</h1>
-          <button><img src="@/assets/icons/garb.svg" alt="Корзина"></button>
+          <button @click="deleteCityLocalStorage(city.city)"><img src="@/assets/icons/garb.svg" alt="Корзина"></button>
         </div>
       </article>
     </div>
@@ -55,6 +55,10 @@ export default {
     addNewCityLocalStorage(){
       actionsLocalStorage.setNewCity(this.newCity)
       this.newCity = '',
+      this.$emit('updateCities')
+    },
+    deleteCityLocalStorage(cityName){
+      actionsLocalStorage.deleteCity(cityName)
       this.$emit('updateCities')
     }
   }
