@@ -1,12 +1,20 @@
 <template>
      <button>
-          <img src="@/assets/icons/settings.svg" alt="Settings">
+          <img id="gear" v-if="!isSettings" src="@/assets/icons/settings.svg" alt="Settings">
+          <img id="close" v-else src="@/assets/icons/close.svg" alt="Settings">
+
      </button>
 </template>
 
 <script>
 export default {
      name: 'SettingsButton',
+     props: {
+          isSettings: {
+               type: Boolean,
+               required: true
+          }
+     }
      
 }
 </script>
@@ -28,6 +36,11 @@ button {
                height: inherit;
                width: inherit;
           }
+
+     #close {
+          width: 1.5em;
+          height: 1.5em;
+     }
 }
 
 

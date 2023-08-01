@@ -33,6 +33,8 @@
 
 <script>
 import IconWeather from './MainWindow/IconWeather.vue'
+
+
 export default {
   name: 'MainWindowWeatherWidgets',
   components: {

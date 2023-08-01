@@ -1,9 +1,10 @@
 <template>
   <div class="widgets__wrap">
     <Preloader v-show="isPreloader"/>
-    
     <div v-show="addedСities.length">
-      <SettingsButton @click="isSettings = !isSettings"/>
+      <SettingsButton 
+        :isSettings="isSettings"
+        @click="isSettings = !isSettings"/>
       <div v-if="!isSettings">
         <main-window-weather-widgets 
           v-for="city in addedСities"

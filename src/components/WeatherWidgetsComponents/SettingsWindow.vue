@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div>
+    <div class="title__wrap">
       <h1>Settings</h1>
-      <button>Close</button>
     </div>
     <div>
       <article>
@@ -27,5 +26,11 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-
+.title__wrap{
+  h1{ 
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+}
 </style>
