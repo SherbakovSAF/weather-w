@@ -1,53 +1,54 @@
 <template>
   <div class="widgets__wrap">
-    <Preloader v-show="isPreloader && !isSettings"/>
-
+    <weather-window-preloader 
+      v-show="isPreloader && !isSettings" />
     <div v-show="addedСities.length">
-      <SettingsButton
-        
-        :isSettings="isSettings"
-        @click="isSettings = !isSettings"/>
+      <toggle-settings 
+        :isSettings="isSettings" 
+        @click="isSettings = !isSettings" />
       <div v-if="!isSettings">
-        <main-window-weather-widgets 
-          v-for="city in addedСities"
-          :key="city.city"
-          :city="city"/>
+        <weather-window v-for="city in addedСities" :key="city.city" 
+          :city="city" />
       </div>
-      <settings v-else 
-      :citiesList="addedСities"
-      :isPreloader="isPreloader" 
-      @updateCities="updateCitiesData"/>
+      <settings-window v-else 
+        :citiesList="addedСities"
+        :isPreloader="isPreloader" 
+        @updateCities="updateCitiesData" />
     </div>
   </div>
 </template>
 
-<script>
-import MainWindowWeatherWidgets from './WeatherWidgetsComponents/MainWindow.vue'
-import Settings from './WeatherWidgetsComponents/SettingsWindow.vue'
-import Preloader from './PreloaderComponents.vue'
-import SettingsButton from './WeatherWidgetsComponents/SettingsButton.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
+// Components
+import WeatherWindow from '@/components/WeatherWidgetsComponents/WeatherWindow.vue'
+import SettingsWindow from '@/components/WeatherWidgetsComponents/SettingsWindow.vue'
+import WeatherWindowPreloader from '@/components/WeatherWidgetsComponents/WeatherWindowPreloader.vue'
+import ToggleSettings from '@/components/WeatherWidgetsComponents/ToggleSettings.vue'
 
-import getWeather from '@/API/getWeather.js'
-import actionsLocalStorage from '@/localStorage/actions.js'
-export default {
+// API
+import getWeather from '@/API/GetWeather'
+import apiLocalStorage from '@/API/LocalStorage'
+
+export default defineComponent({
   name: 'WeatherWidgets',
   components: {
-    MainWindowWeatherWidgets,
-    Settings,
-    Preloader,
-    SettingsButton
+    WeatherWindow,
+    SettingsWindow,
+    WeatherWindowPreloader,
+    ToggleSettings
   },
-  data(){
-    return{
-      addedСities: [],
+  data() {
+    return {
+      addedСities: [] as any[],
       isPreloader: false,
-      isSettings: false,
+      isSettings: true,
     }
   },
   methods: {
-  async updateCitiesData() {
-    this.isPreloader = true
-    const localStorageCities = await actionsLocalStorage.getCitiesArray()
+    async updateCitiesData() {
+      this.isPreloader = true
+      const localStorageCities = await apiLocalStorage.getCitiesArray()
       const updatedCitiesData = [];
       for (const city of localStorageCities) {
         try {
@@ -61,17 +62,17 @@ export default {
       this.addedСities = updatedCitiesData;
       this.isPreloader = false
     },
-    rotateDirection(deg){
+    rotateDirection(deg:number):string {
       return `rotate: ${deg}deg`
     },
   },
   async mounted() {
     await this.updateCitiesData()
   }
-}
+})
 </script>
 <style scoped lang="scss">
-.widgets__wrap{
+.widgets__wrap {
   position: relative;
   font-size: 15px;
   width: 270px;

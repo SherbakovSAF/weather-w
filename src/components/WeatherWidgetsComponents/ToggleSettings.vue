@@ -5,16 +5,17 @@
      </button>
 </template>
 
-<script>
-export default {
-     name: 'SettingsButton',
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({
+     name: 'SettingsWindowPreloader',
      props: {
           isSettings: {
                type: Boolean,
                required: true
           }
      }
-}
+})
 </script>
 
 <style scoped lang="scss">

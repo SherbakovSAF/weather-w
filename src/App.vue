@@ -2,7 +2,7 @@
   <WeatherWidgets/>
 </template>
 
-<script>
+<script lang="ts">
 import WeatherWidgets from '@/components/WeatherWidgets.vue'
 
 export default {

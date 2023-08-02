@@ -53,7 +53,7 @@
 
 <script>
 export default {
-     name: 'PreloaderComponents',
+     name: 'WeatherWindowPreloader',
 }
 </script>
 <style scoped lang="scss">

@@ -4,14 +4,16 @@
      </div>
 </template>
 
-<script>
-export default {
-     name: 'IconWeather',
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+     name: 'WeatherWindowIconsComp',
      props: {
           weather: {
                type: String,
                required: false, 
-               default: 'sun'
+               default: 'clear'
           }
      },
      data(){
@@ -22,11 +24,11 @@ export default {
                     rain: require('@/assets/weatherIcons/rain.svg'),
                     snow: require('@/assets/weatherIcons/snow.svg'),
 
-               }
+               } as {[key: string]: string}
           }
      },
      computed: {
-          renderIconWeather(){
+          renderIconWeather():string{
                if(this.weather){
                     return this.iconPath[this.weather]
                } else {
@@ -37,7 +39,7 @@ export default {
      // mounted(){
      //      console.log(this.weather)
      // }
-}
+})
 </script>
 <style scoped lang="scss">
 .weather__icon__wrap{

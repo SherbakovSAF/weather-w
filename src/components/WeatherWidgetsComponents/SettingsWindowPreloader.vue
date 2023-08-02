@@ -7,10 +7,11 @@
   </div>
 </template>
 
-<script>
-export default {
-     name: 'PreloaderComponents',
-}
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({
+     name: 'SettingsWindowPreloader',
+})
 </script>
 <style scoped lang="scss">
 .preloader{

@@ -6,9 +6,10 @@
      </div>
 </template>
 
-<script>
-export default {
-     name: 'IconHamburg',
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({
+     name: 'SettingsWindowHamburgComp',
      props: {
           weather: {
                type: String,
@@ -16,7 +17,7 @@ export default {
                default: 'sun'
           }
      }
-}
+})
 </script>
 <style scoped lang="scss">
 .hamburg__icon{

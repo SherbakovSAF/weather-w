@@ -31,9 +31,11 @@
   <hr>
 </template>
 
-<script>
-import IconWeather from './MainWindow/IconWeather.vue'
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+import IconWeather from './WeatherWindowIconsComp.vue'
+
+export default defineComponent({
   name: 'MainWindowWeatherWidgets',
   components: {
     IconWeather,
@@ -45,11 +47,11 @@ export default {
     },
   },
   methods: {
-    calcRotateDirection(deg){
+    calcRotateDirection(deg:number):string{
       return `rotate: ${deg}deg`
     }
   }
-}
+})
 </script>
 <style scoped lang="scss">
 .main__wrap {
