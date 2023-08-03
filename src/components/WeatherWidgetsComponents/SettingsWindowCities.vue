@@ -4,7 +4,7 @@
       @start="dragging = true"
       @end="updateLocalStorage"
       :list="citiesList" 
-      :item-key="'hPa'"
+      :item-key="'city'"
     >
     <template #item="{element: citiesList}">
       <article >
@@ -61,6 +61,22 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .cities__wrap {
+  * {
+    font-size: 16px;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
   display: grid;
   grid-row-gap: 15px;
 

@@ -1,8 +1,10 @@
 <template>
   <div class="widgets__wrap">
     <weather-window-preloader 
-      v-show="isPreloader && !isSettings" />
-    <div v-show="addedСities.length">
+      v-if="isPreloader && !isSettings" />
+  <div v-else>
+    <add-new-city v-if="!addedСities.length" @updateCities="updateCitiesData"/>
+    <div v-else>
       <toggle-settings 
         :isSettings="isSettings" 
         @click="isSettings = !isSettings" />
@@ -16,6 +18,7 @@
         @updateCities="updateCitiesData" />
     </div>
   </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,6 +28,7 @@ import WeatherWindow from '@/components/WeatherWidgetsComponents/WeatherWindow.v
 import SettingsWindow from '@/components/WeatherWidgetsComponents/SettingsWindow.vue'
 import WeatherWindowPreloader from '@/components/WeatherWidgetsComponents/WeatherWindowPreloader.vue'
 import ToggleSettings from '@/components/WeatherWidgetsComponents/ToggleSettings.vue'
+import AddNewCity from './WeatherWidgetsComponents/AddNewCity.vue'
 
 // API
 import getWeather from '@/API/GetWeather'
@@ -36,13 +40,14 @@ export default defineComponent({
     WeatherWindow,
     SettingsWindow,
     WeatherWindowPreloader,
-    ToggleSettings
+    ToggleSettings,
+    AddNewCity
   },
   data() {
     return {
       addedСities: [] as any[],
       isPreloader: false,
-      isSettings: true,
+      isSettings: false,
     }
   },
   methods: {

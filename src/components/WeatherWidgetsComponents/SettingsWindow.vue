@@ -32,7 +32,7 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .main__wrap {
   * {
     font-size: 16px;

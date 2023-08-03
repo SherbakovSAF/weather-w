@@ -52,8 +52,25 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .new__location__wrap {
+
+  * {
+    font-size: 16px;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
   margin-top: 30px;
 
   h2 {
