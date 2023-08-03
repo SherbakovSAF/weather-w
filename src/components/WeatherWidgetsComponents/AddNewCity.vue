@@ -32,7 +32,7 @@ export default defineComponent({
       let correctName
       const res = await getCityData.getCityData(this.newCity)
       if(typeof res == 'boolean'){
-        alert('Такого города не существует')
+        alert('Такого города не существует или ошибка API')
         return
       } else {
         correctName = res.city

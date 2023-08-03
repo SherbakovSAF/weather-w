@@ -59,14 +59,14 @@ const getCityData = {
         return directions[Number(closestRotate)];
     },
     // methods
-    async getCityCoordinates(city: string): Promise<{ lat: number; lon: number; } | false> {
+    async getCityCoordinates(city: string): Promise<{ lat: number; lon: number; name:string; } | false> {
         const response = await fetch(
             `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${this.apiKey}`
         );
         const data = await response.json();
         try {
-            const { lat, lon } = data[0];
-            return { lat, lon };
+            const { lat, lon, name } = data[0];
+            return { lat, lon, name };
         } catch (error) {
             return false
         }
@@ -111,13 +111,16 @@ const getCityData = {
         } catch (error) {
             return false
         }
+        console.log(cord)
 
-        if (typeof cord !== 'boolean') {
-            const weatherDataApiObj = await this.getCityWeather(cord);
+        if (typeof cord == 'boolean') return false;
+        const weatherDataApiObj = await this.getCityWeather(cord);
+        if(cord.name == weatherDataApiObj.name){
             return this.makeWeatherObject(weatherDataApiObj);
-          } else {
-            return false;
-          }        
+        } else {
+            return false
+        }
+        
     },
 };
 
