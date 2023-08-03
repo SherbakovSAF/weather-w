@@ -1,23 +1,16 @@
 <template>
   <div class="widgets__wrap">
-    <weather-window-preloader 
-      v-if="isPreloader && !isSettings" />
-  <div v-else>
-    <add-new-city v-if="!addedСities.length" @updateCities="updateCitiesData"/>
+    <weather-window-preloader v-if="isPreloader && !isSettings" />
     <div v-else>
-      <toggle-settings 
-        :isSettings="isSettings" 
-        @click="isSettings = !isSettings" />
-      <div v-if="!isSettings">
-        <weather-window v-for="city in addedСities" :key="city.city" 
-          :city="city" />
+      <add-new-city v-if="!addedСities.length" @updateCities="updateCitiesData" />
+      <div v-else>
+        <toggle-settings :isSettings="isSettings" @click="isSettings = !isSettings" />
+        <div v-if="!isSettings">
+          <weather-window v-for="city in addedСities" :key="city.city" :city="city" />
+        </div>
+        <settings-window v-else :citiesList="addedСities" :isPreloader="isPreloader" @updateCities="updateCitiesData" />
       </div>
-      <settings-window v-else 
-        :citiesList="addedСities"
-        :isPreloader="isPreloader" 
-        @updateCities="updateCitiesData" />
     </div>
-  </div>
   </div>
 </template>
 
@@ -51,7 +44,7 @@ export default defineComponent({
     }
   },
   methods: {
-    async updateCitiesData() {
+    async updateCitiesData():Promise<void> {
       this.isPreloader = true
       const localStorageCities = await apiLocalStorage.getCitiesArray()
       const updatedCitiesData = [];
@@ -63,7 +56,6 @@ export default defineComponent({
           console.error(`Ошибка при получении погоды для города ${city}:`, error);
         }
       }
-
       this.addedСities = updatedCitiesData;
       this.isPreloader = false
     },
