@@ -27,6 +27,9 @@ const actionsLocalStorage = {
             return this.getCitiesArray();
         }
     },
+    updateCities(cities: string[]):void{
+        localStorage.setItem(this.nameLocalStorage, JSON.stringify(cities))
+    }
 };
 
 export default actionsLocalStorage;

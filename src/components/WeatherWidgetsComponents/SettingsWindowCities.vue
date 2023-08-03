@@ -2,7 +2,7 @@
     <draggable class="cities__wrap" 
       handle=".handle"
       @start="dragging = true"
-      @end="dragging = false"
+      @end="updateLocalStorage"
       :list="citiesList" 
       :item-key="'hPa'"
     >
@@ -50,6 +50,12 @@ export default defineComponent({
       localStorage.deleteCity(cityName)
       this.$emit('updateCities')
     },
+    updateLocalStorage(){
+      this.dragging = false
+      const filteredCity: string[] = this.citiesList.map((e:any) => e.city);
+      localStorage.updateCities(filteredCity)
+      this.$emit('updateCities')
+    }
   }
 })
 </script>
