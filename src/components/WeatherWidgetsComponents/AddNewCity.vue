@@ -2,8 +2,9 @@
     <div class="new__location__wrap">
       <h2>Add Location:</h2>
       <div class="input__block">
-        <input :class="{ 'input__valid': !isValid }"
+        <input :class="{ 'input__valid': !checkValidate() }"
           @keydown.enter="addNewCityLocalStorage"
+          @keydown.delete="invalidTitle = ''"
           v-model.trim="newCity"
           type="text">
         <button @click="addNewCityLocalStorage"
@@ -11,7 +12,7 @@
           <img src="@/assets/icons/enter.svg" alt="Ввод">
         </button>
       </div>
-      <span v-show="!isValid && newCity.length < 0">Введите корректное значение</span>
+      <span v-show="!checkValidate()">{{ invalidTitle }}</span>
     </div>
 </template>
 
@@ -26,22 +27,34 @@ export default defineComponent({
   data() {
     return {
       newCity: '',
+      invalidTitle: ''
     }
   },
   computed: {
     isValid() {
-      return /^[a-zA-Z]{5,}$/.test(this.newCity) 
+      return /^.{5,}$/.test(this.newCity) 
     },
+    
   },
   methods: {
     addNewCityLocalStorage() {
-      if (!this.isValid) {
-        return
-      }
+      if(!this.checkValidate()) return
       apiLocalStorage.setNewCity(this.newCity)
       this.newCity = ''
       this.$emit('updateCities')
     },
+    checkValidate(){
+      if (!this.isValid) {
+        this.invalidTitle = 'Минимальное значение 5'
+        return false
+      }
+
+      if(apiLocalStorage.getCitiesArray().indexOf(this.newCity) >= 0){
+        this.invalidTitle = 'Такой город уже добавлен'
+        return false
+      }
+      return true
+    }
   }
 })
 </script>
