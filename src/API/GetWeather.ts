@@ -116,7 +116,6 @@ const getCityData = {
             const weatherDataApiObj = await this.getCityWeather(cord);
             return this.makeWeatherObject(weatherDataApiObj);
           } else {
-            // Handle the case where cord is false
             return false;
           }        
     },
