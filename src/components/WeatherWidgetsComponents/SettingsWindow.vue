@@ -7,7 +7,7 @@
     <settings-window-cities v-else
       @updateCities="$emit('updateCities')"
       :citiesList="citiesList"/>
-    <add-new-city />
+    <add-new-city @updateCities="$emit('updateCities')"/>
   </div>
 </template>
 

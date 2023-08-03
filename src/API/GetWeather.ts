@@ -59,13 +59,18 @@ const getCityData = {
         return directions[Number(closestRotate)];
     },
     // methods
-    async getCityCoordinates(city: string): Promise<{ lat: number; lon: number }> {
+    async getCityCoordinates(city: string): Promise<{ lat: number; lon: number; } | false> {
         const response = await fetch(
             `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${this.apiKey}`
         );
         const data = await response.json();
-        const { lat, lon } = data[0];
-        return { lat, lon };
+        try {
+            const { lat, lon } = data[0];
+            return { lat, lon };
+        } catch (error) {
+            return false
+        }
+        
     },
     async getCityWeather(cord: { lat: number; lon: number }): Promise<any> {
         const { lat, lon } = cord;
@@ -99,10 +104,21 @@ const getCityData = {
             ),
         };
     },
-    async getCityData(city: string): Promise<WeatherData> {
-        const cord = await this.getCityCoordinates(city);
-        const weatherDataApiObj = await this.getCityWeather(cord);
-        return this.makeWeatherObject(weatherDataApiObj);
+    async getCityData(city: string): Promise<boolean | WeatherData>{
+        let cord
+        try {
+            cord = await this.getCityCoordinates(city);
+        } catch (error) {
+            return false
+        }
+
+        if (typeof cord !== 'boolean') {
+            const weatherDataApiObj = await this.getCityWeather(cord);
+            return this.makeWeatherObject(weatherDataApiObj);
+          } else {
+            // Handle the case where cord is false
+            return false;
+          }        
     },
 };
 

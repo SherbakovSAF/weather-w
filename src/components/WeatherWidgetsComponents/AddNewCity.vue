@@ -2,17 +2,14 @@
     <div class="new__location__wrap">
       <h2>Add Location:</h2>
       <div class="input__block">
-        <input :class="{ 'input__valid': !checkValidate() }"
+        <input :class="{ 'input__valid': !checkValidate }"
           @keydown.enter="addNewCityLocalStorage"
-          @keydown.delete="invalidTitle = ''"
           v-model.trim="newCity"
           type="text">
-        <button @click="addNewCityLocalStorage"
-          :disabled="!isValid">
+        <button @click="addNewCityLocalStorage">
           <img src="@/assets/icons/enter.svg" alt="Ввод">
         </button>
       </div>
-      <span v-show="!checkValidate()">{{ invalidTitle }}</span>
     </div>
 </template>
 
@@ -20,6 +17,7 @@
 import { defineComponent } from 'vue'
 // API
 import apiLocalStorage from '@/API/LocalStorage'
+import getCityData from '@/API/GetWeather'
 
 export default defineComponent({
   name: 'AddNewCity',
@@ -27,30 +25,26 @@ export default defineComponent({
   data() {
     return {
       newCity: '',
-      invalidTitle: ''
     }
   },
-  computed: {
-    isValid() {
-      return /^.{5,}$/.test(this.newCity) 
-    },
-    
-  },
   methods: {
-    addNewCityLocalStorage() {
-      if(!this.checkValidate()) return
-      apiLocalStorage.setNewCity(this.newCity)
+    async addNewCityLocalStorage() {
+      let correctName
+      const res = await getCityData.getCityData(this.newCity)
+      if(typeof res == 'boolean'){
+        alert('Такого города не существует')
+        return
+      } else {
+        correctName = res.city
+      }
+      if(!this.checkValidate(correctName)) return
+      apiLocalStorage.setNewCity(correctName)
       this.newCity = ''
       this.$emit('updateCities')
     },
-    checkValidate(){
-      if (!this.isValid) {
-        this.invalidTitle = 'Минимальное значение 5'
-        return false
-      }
-
-      if(apiLocalStorage.getCitiesArray().indexOf(this.newCity) >= 0){
-        this.invalidTitle = 'Такой город уже добавлен'
+    checkValidate(city: string): boolean{
+      if(apiLocalStorage.getCitiesArray().indexOf(city) >= 0){
+        alert('Такой город уже добавлен')
         return false
       }
       return true
